@@ -74,6 +74,16 @@ function Index() {
       </header>
 
       <section id="top" className="bg-page-gradient relative flex min-h-[92svh] items-center overflow-hidden px-5 pb-16 pt-32 sm:px-8 sm:pt-36">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 select-none">
+          <span className="float-emoji absolute left-[5%] top-[14%] text-3xl sm:text-4xl" style={{ animationDuration: "6.5s" }}>💻</span>
+          <span className="float-emoji absolute right-[6%] top-[9%] hidden text-3xl sm:block" style={{ animationDuration: "8s" }}>🌐</span>
+          <span className="float-emoji absolute left-[16%] bottom-[12%] text-2xl" style={{ animationDuration: "7.5s" }}>✨</span>
+          <span className="float-emoji absolute bottom-[30%] right-[13%] hidden text-4xl md:block" style={{ animationDuration: "6s" }}>🤖</span>
+          <span className="float-emoji absolute left-[42%] top-[8%] hidden text-2xl md:block" style={{ animationDuration: "9s" }}>💌</span>
+          <span className="float-emoji absolute bottom-[10%] right-[30%] hidden text-xl sm:block" style={{ animationDuration: "8.5s" }}>💜</span>
+          <span className="float-emoji absolute left-[8%] top-[55%] hidden text-2xl lg:block" style={{ animationDuration: "7s" }}>📱</span>
+          <span className="float-emoji absolute right-[4%] top-[45%] text-2xl sm:text-3xl" style={{ animationDuration: "6.8s" }}>⚡</span>
+        </div>
         <div className="absolute left-[8%] top-[22%] size-3 rotate-12 bg-brand-lime" aria-hidden="true" />
         <div className="absolute bottom-[18%] right-[8%] size-5 rounded-full border-4 border-primary/40" aria-hidden="true" />
         <div className="mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
@@ -101,7 +111,13 @@ function Index() {
         </div>
       </section>
 
-      <section id="waitlist" className="bg-primary px-5 py-20 text-primary-foreground sm:px-8 sm:py-28">
+      <section id="waitlist" className="relative overflow-hidden bg-primary px-5 py-20 text-primary-foreground sm:px-8 sm:py-28">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 select-none">
+          <span className="float-emoji absolute left-[6%] top-[16%] text-2xl opacity-80" style={{ animationDuration: "7.2s" }}>✨</span>
+          <span className="float-emoji absolute bottom-[14%] right-[7%] hidden text-3xl opacity-80 sm:block" style={{ animationDuration: "8.4s" }}>💖</span>
+          <span className="float-emoji absolute right-[22%] top-[10%] hidden text-2xl opacity-70 lg:block" style={{ animationDuration: "6.4s" }}>🌐</span>
+          <span className="float-emoji absolute bottom-[10%] left-[28%] hidden text-xl opacity-70 lg:block" style={{ animationDuration: "9s" }}>💜</span>
+        </div>
         <div className="mx-auto grid max-w-5xl items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
           <div>
             <p className="mb-3 text-sm font-bold uppercase text-brand-lime">Stay in the loop</p>
