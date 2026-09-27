@@ -187,6 +187,16 @@
   50% { transform: translateY(-12px) rotate(1deg); }
 }
 
+@utility float-emoji {
+  animation: float-emoji 7s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes float-emoji {
+  0%, 100% { transform: translateY(0) rotate(-6deg); }
+  50% { transform: translateY(-16px) rotate(8deg); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
