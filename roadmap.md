@@ -6,3 +6,4 @@
 - [x] Verify desktop and mobile presentation.
 - [x] Replace the circular logo treatment and add Thai supporting copy.
 - [x] Add floating internet/AI emoji accents and a partnership section linking to the original site.
+- [x] Full redesign per brief: hero, mission, what we do, Thailand map, events, FAQ, join.
