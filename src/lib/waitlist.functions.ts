@@ -1,8 +1,9 @@
 import { createServerFn } from "@tanstack/react-start";
-import { createClient } from "@supabase/supabase-js";
 
-// Public server function: saves a waitlist signup to the Lovable Cloud database.
-// No session required — visitors join with just an email. RLS allows inserts only.
+const GATEWAY_URL = "https://connector-gateway.lovable.dev/google_sheets/v4";
+const SHEET_ID = "15AvOPdVi_aO526_TJ82a-dsNlCjE9ZQ1zO0sVq4KwpY";
+
+// Public server function: appends a waitlist signup to the Google Sheet.
 export const joinWaitlist = createServerFn({ method: "POST" })
   .inputValidator((input: { email: string }) => {
     const email = input.email.trim().toLowerCase();
@@ -12,22 +13,38 @@ export const joinWaitlist = createServerFn({ method: "POST" })
     return { email };
   })
   .handler(async ({ data }) => {
-    const key = process.env['SUPABASE_PUBLISHABLE_KEY']!;
-    const supabasePublic = createClient(process.env['SUPABASE_URL']!, key, {
-      auth: { persistSession: false, autoRefreshToken: false },
-      // Opaque sb_ keys aren't JWTs; send only apikey, not the default Authorization bearer.
-      global: { fetch: (input, init) => {
-        const h = new Headers(init?.headers);
-        if (key.startsWith("sb_") && h.get("Authorization") === `Bearer ${key}`) h.delete("Authorization");
-        h.set("apikey", key);
-        return fetch(input, { ...init, headers: h });
-      } },
-    });
+    const lovableKey = process.env["LOVABLE_API_KEY"];
+    const sheetsKey = process.env["GOOGLE_SHEETS_API_KEY"];
+    if (!lovableKey || !sheetsKey) throw new Error("Google Sheets is not connected.");
+    const headers = {
+      Authorization: `Bearer ${lovableKey}`,
+      "X-Connection-Api-Key": sheetsKey,
+      "Content-Type": "application/json",
+    };
 
-    const { error } = await supabasePublic.from("waitlist").insert({ email: data.email });
-    if (error) {
-      if (error.code === "23505") return { status: "duplicate" as const };
-      throw new Error(error.message);
+    const readRes = await fetch(`${GATEWAY_URL}/spreadsheets/${SHEET_ID}/values/Sheet1!A:A`, { headers });
+    if (!readRes.ok) {
+      const body = await readRes.text();
+      console.error(`Sheets read failed [${readRes.status}]: ${body}`);
+      throw new Error("Could not save your signup. Please try again.");
+    }
+    const rows: string[][] = (await readRes.json()).values ?? [];
+    if (rows.some((r) => (r[0] ?? "").trim().toLowerCase() === data.email)) {
+      return { status: "duplicate" as const };
+    }
+
+    const newRows: string[][] = [];
+    if (rows.length === 0) newRows.push(["Email", "Joined at"]);
+    newRows.push([data.email, new Date().toISOString()]);
+
+    const appendRes = await fetch(
+      `${GATEWAY_URL}/spreadsheets/${SHEET_ID}/values/Sheet1!A:B:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
+      { method: "POST", headers, body: JSON.stringify({ values: newRows }) },
+    );
+    if (!appendRes.ok) {
+      const body = await appendRes.text();
+      console.error(`Sheets append failed [${appendRes.status}]: ${body}`);
+      throw new Error("Could not save your signup. Please try again.");
     }
 
     // Welcome email — failures never block the signup itself.
