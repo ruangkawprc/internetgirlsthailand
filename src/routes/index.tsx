@@ -159,7 +159,7 @@ function Index() {
         <div className="mx-auto w-full max-w-5xl text-center">
           <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary-foreground/85 sm:text-sm">Internet Girls Thailand</p>
           <h1 className="mx-auto mt-6 max-w-4xl font-display text-5xl font-medium leading-[1.02] sm:text-7xl lg:text-[5.5rem]">
-            Making AI accessible to <em className="text-gradient-light pr-1">more women</em> in Thailand.
+            Making AI accessible to <em className="text-gradient-light pr-1">more women</em> in <em className="text-gradient-light">Thailand</em>.
           </h1>
           <p className="mx-auto mt-7 max-w-2xl text-lg font-semibold sm:text-xl">A community for women to learn, experiment, and build with AI for free.</p>
           <p className="mx-auto mt-4 max-w-2xl leading-7 text-primary-foreground/85">
