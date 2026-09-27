@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, Facebook, FileSpreadsheet, Instagram, LoaderCircle, Menu, X } from "lucide-react";
+import { ArrowRight, Facebook, Instagram, LoaderCircle, Menu, X } from "lucide-react";
 import { type FormEvent, useState } from "react";
-import * as XLSX from "xlsx";
 import asiaMap from "@/assets/asia-dot-map.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,19 +27,6 @@ function saveWaitlist(entries: WaitlistEntry[]) {
   window.localStorage.setItem(WAITLIST_KEY, JSON.stringify(entries));
 }
 
-function downloadWaitlist() {
-  const entries = loadWaitlist();
-  const rows = entries.map((entry, index) => ({
-    No: index + 1,
-    Email: entry.email,
-    "Joined At": new Date(entry.joinedAt).toLocaleString(),
-  }));
-  const worksheet = XLSX.utils.json_to_sheet(rows.length ? rows : [{ No: "", Email: "", "Joined At": "" }]);
-  worksheet["!cols"] = [{ wch: 6 }, { wch: 36 }, { wch: 24 }];
-  const workbook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(workbook, worksheet, "Waitlist");
-  XLSX.writeFile(workbook, "internet-girls-thailand-waitlist.xlsx");
-}
 
 // Set to an event object to show it; null shows the "coming soon" state.
 const UPCOMING_EVENT: null | { name: string; description: string; date: string; href: string } = null;
@@ -327,9 +313,6 @@ function Index() {
               </Button>
             </div>
             <p id="form-message" aria-live="polite" className={`mt-3 min-h-5 text-sm font-semibold ${status === "error" ? "text-destructive" : status === "success" ? "text-primary" : "text-muted-foreground"}`}>{message}</p>
-            <Button type="button" variant="outline" size="sm" onClick={downloadWaitlist} className="mt-2 rounded-full">
-              <FileSpreadsheet /> Download waitlist (.xlsx)
-            </Button>
           </form>
         </div>
       </section>
@@ -342,6 +325,7 @@ function Index() {
             <Button asChild variant="outline" size="icon" className="rounded-full" aria-label="Facebook"><a href={FACEBOOK} target="_blank" rel="noreferrer"><Facebook /></a></Button>
           </div>
         </div>
+        <p className="mx-auto mt-8 max-w-6xl text-center text-xs text-muted-foreground sm:text-sm">© 2026 Internet Girls Thailand. All rights reserved.</p>
       </footer>
     </main>
   );
