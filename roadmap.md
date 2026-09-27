@@ -5,3 +5,4 @@
 - [x] Apply the enhanced logo and its palette.
 - [x] Verify desktop and mobile presentation.
 - [x] Replace the circular logo treatment and add Thai supporting copy.
+- [x] Add floating internet/AI emoji accents and a partnership section linking to the original site.
