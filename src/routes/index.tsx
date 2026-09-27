@@ -1,9 +1,42 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, Facebook, Instagram, LoaderCircle, Menu, Sparkles, X } from "lucide-react";
+import { ArrowRight, Facebook, FileSpreadsheet, Instagram, LoaderCircle, Menu, Sparkles, X } from "lucide-react";
 import { type FormEvent, useState } from "react";
+import * as XLSX from "xlsx";
 import logo from "@/assets/internet-girls-thailand-logo.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+
+const WAITLIST_KEY = "igt-waitlist";
+
+type WaitlistEntry = { email: string; joinedAt: string };
+
+function loadWaitlist(): WaitlistEntry[] {
+  try {
+    const raw = window.localStorage.getItem(WAITLIST_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveWaitlist(entries: WaitlistEntry[]) {
+  window.localStorage.setItem(WAITLIST_KEY, JSON.stringify(entries));
+}
+
+function downloadWaitlist() {
+  const entries = loadWaitlist();
+  const rows = entries.map((entry, index) => ({
+    No: index + 1,
+    Email: entry.email,
+    "Joined At": new Date(entry.joinedAt).toLocaleString(),
+  }));
+  const worksheet = XLSX.utils.json_to_sheet(rows.length ? rows : [{ No: "", Email: "", "Joined At": "" }]);
+  worksheet["!cols"] = [{ wch: 6 }, { wch: 36 }, { wch: 24 }];
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Waitlist");
+  XLSX.writeFile(workbook, "internet-girls-thailand-waitlist.xlsx");
+}
 
 export const Route = createFileRoute("/")({
   head: () => ({
