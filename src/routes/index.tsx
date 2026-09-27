@@ -136,7 +136,7 @@ function Index() {
         <div className="mx-auto flex max-w-6xl items-center justify-between rounded-full border border-border/60 bg-background/85 px-4 py-2 shadow-soft backdrop-blur-md sm:px-5">
           <a href="#top" className="flex items-center gap-2.5" aria-label="Internet Girls Thailand home">
             <Star className="size-9" />
-            <span className="font-display text-lg font-semibold italic">internet girls <span className="text-gradient">thailand</span></span>
+            <span className="font-display text-lg font-semibold italic">Internet Girls Thailand</span>
           </a>
           <nav className="hidden items-center gap-7 text-sm font-medium md:flex" aria-label="Main navigation">
             {navLinks.map((l) => <a key={l.href} href={l.href} className="transition-colors hover:text-primary">{l.label}</a>)}
