@@ -171,9 +171,10 @@
 }
 
 @utility btn-gradient-outline {
-  border: 1.5px solid transparent;
+  border: 2px solid transparent;
+  background-color: oklch(1 0 0);
   background-image:
-    linear-gradient(var(--color-background), var(--color-background)),
+    linear-gradient(oklch(1 0 0), oklch(1 0 0)),
     linear-gradient(120deg, oklch(0.58 0.2 255) 0%, oklch(0.68 0.14 280) 40%, oklch(0.72 0.12 300) 70%, oklch(0.76 0.09 220) 100%);
   background-origin: border-box;
   background-clip: padding-box, border-box;
