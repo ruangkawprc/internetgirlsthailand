@@ -45,6 +45,29 @@ function downloadWaitlist() {
 // Set to an event object to show it; null shows the "coming soon" state.
 const UPCOMING_EVENT: null | { name: string; description: string; date: string; href: string } = null;
 
+// Decorative country labels overlaid on the dotted Asia map (percent coordinates).
+// Thailand is most prominent; Philippines and Vietnam are secondary; the rest of
+// Southeast Asia is labeled smaller.
+const MAP_LABELS: { name: string; x: number; y: number; tier: "hero" | "major" | "minor" }[] = [
+  { name: "Thailand", x: 47, y: 55.5, tier: "hero" },
+  { name: "Philippines", x: 68.5, y: 57.5, tier: "major" },
+  { name: "Vietnam", x: 60.5, y: 64.5, tier: "major" },
+  { name: "Myanmar", x: 38.5, y: 62, tier: "minor" },
+  { name: "Laos", x: 57.5, y: 60, tier: "minor" },
+  { name: "Cambodia", x: 55.5, y: 71.5, tier: "minor" },
+  { name: "Malaysia", x: 45.5, y: 78, tier: "minor" },
+  { name: "Singapore", x: 53.5, y: 82, tier: "minor" },
+  { name: "Brunei", x: 71, y: 76.5, tier: "minor" },
+  { name: "Indonesia", x: 72, y: 87.5, tier: "major" },
+  { name: "Timor-Leste", x: 78.5, y: 91.5, tier: "minor" },
+];
+
+const MAP_LABEL_STYLES: Record<"hero" | "major" | "minor", string> = {
+  hero: "text-lg font-bold tracking-wide sm:text-2xl text-primary-foreground",
+  major: "text-sm font-semibold sm:text-base text-primary-foreground",
+  minor: "text-[10px] font-medium sm:text-xs text-primary-foreground/85",
+};
+
 const PILLARS = [
   { label: "Learn", title: "Free AI workshops", body: "Beginner friendly, hands on sessions that make AI easier to understand and use, with no technical background required." },
   { label: "Build", title: "Learn by doing", body: "Use AI to create something yourself, from AI agents and websites to creative projects and practical tools." },
@@ -211,7 +234,25 @@ function Index() {
             <p className="mt-8 inline-flex flex-wrap items-center gap-2 rounded-full bg-primary-foreground/15 px-5 py-3 text-sm font-bold">Bangkok → Thailand → Southeast Asia 🌏</p>
           </div>
           <div className="relative">
-            <img src={asiaMap} alt="Map of Asia with Thailand highlighted" width={1280} height={1024} loading="lazy" className="w-full opacity-90 brightness-0 invert" />
+            <img src={asiaMap} alt="Dotted map of Asia with Southeast Asia countries labeled and Thailand highlighted" width={1280} height={1024} loading="lazy" className="w-full opacity-90 brightness-0 invert" />
+            <div className="pointer-events-none absolute inset-0 select-none" aria-hidden="true">
+              {MAP_LABELS.map((label) => (
+                <span
+                  key={label.name}
+                  className={`absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap ${MAP_LABEL_STYLES[label.tier]}`}
+                  style={{
+                    left: `${label.x}%`,
+                    top: `${label.y}%`,
+                    textShadow:
+                      label.tier === "hero"
+                        ? "0 1px 2px rgba(35, 25, 75, 0.55), 0 2px 14px rgba(35, 25, 75, 0.45)"
+                        : "0 1px 8px rgba(35, 25, 75, 0.5)",
+                  }}
+                >
+                  {label.name}
+                </span>
+              ))}
+            </div>
             <div className="absolute" style={{ left: "48.8%", top: "67.5%" }} aria-hidden="true">
               <span className="radar-ping absolute left-0 top-0 size-40 rounded-full border-2 border-primary-foreground/80" />
               <span className="radar-ping absolute left-0 top-0 size-40 rounded-full border-2 border-primary-foreground/80 [animation-delay:0.8s]" />
