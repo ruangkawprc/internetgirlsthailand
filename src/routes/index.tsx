@@ -325,6 +325,7 @@ function Index() {
             <Button asChild variant="outline" size="icon" className="rounded-full" aria-label="Facebook"><a href={FACEBOOK} target="_blank" rel="noreferrer"><Facebook /></a></Button>
           </div>
         </div>
+        <p className="mx-auto mt-8 max-w-6xl text-center text-xs text-muted-foreground sm:text-sm">© 2026 Internet Girls Thailand. All rights reserved.</p>
       </footer>
     </main>
   );
