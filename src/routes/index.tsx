@@ -71,6 +71,12 @@ function Index() {
     setMessage("");
     try {
       await new Promise((resolve) => window.setTimeout(resolve, 700));
+      const entries = loadWaitlist();
+      const normalized = email.trim().toLowerCase();
+      if (!entries.some((entry) => entry.email === normalized)) {
+        entries.push({ email: normalized, joinedAt: new Date().toISOString() });
+        saveWaitlist(entries);
+      }
       setStatus("success");
       setMessage("You're on the list!");
       setEmail("");
@@ -149,6 +155,9 @@ function Index() {
             <p id="form-message" aria-live="polite" className={`mt-3 min-h-5 text-sm font-semibold ${status === "error" ? "text-destructive" : status === "success" ? "text-primary" : "text-muted-foreground"}`}>
               {message}
             </p>
+            <Button type="button" variant="outline" size="sm" onClick={downloadWaitlist} className="mt-2 rounded-full">
+              <FileSpreadsheet /> Download waitlist (.xlsx)
+            </Button>
           </form>
         </div>
       </section>
