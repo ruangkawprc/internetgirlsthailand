@@ -39,7 +39,7 @@ function Index() {
     try {
       await new Promise((resolve) => window.setTimeout(resolve, 700));
       setStatus("success");
-      setMessage("You're on the list! 💜");
+      setMessage("You're on the list!");
       setEmail("");
     } catch {
       setStatus("error");
@@ -105,7 +105,7 @@ function Index() {
         <div className="mx-auto grid max-w-5xl items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
           <div>
             <p className="mb-3 text-sm font-bold uppercase text-brand-lime">Stay in the loop</p>
-            <h2 className="font-display text-4xl leading-tight sm:text-6xl">Be the first to know. 💜</h2>
+            <h2 className="font-display text-4xl leading-tight sm:text-6xl">Be the first to know.</h2>
             <p className="mt-5 max-w-lg leading-7 text-primary-foreground/80">Join the Internet Girls Thailand waitlist to hear about upcoming events, workshops, and community updates.</p>
             <p className="mt-2 max-w-lg text-sm leading-6 text-primary-foreground/70">เข้าร่วม Waitlist เพื่อรับข่าวสารกิจกรรม เวิร์กช็อป และอัปเดตจากคอมมูนิตี้</p>
           </div>
