@@ -49,11 +49,11 @@ const UPCOMING_EVENT: null | { name: string; description: string; date: string; 
 // Thailand is most prominent; Philippines and Vietnam are secondary; the rest of
 // Southeast Asia is labeled smaller.
 const MAP_LABELS: { name: string; x: number; y: number; tier: "hero" | "major" | "minor" }[] = [
-  { name: "Thailand", x: 47.5, y: 56.5, tier: "hero" },
-  { name: "Philippines", x: 67.5, y: 58, tier: "major" },
-  { name: "Vietnam", x: 59.5, y: 65, tier: "major" },
-  { name: "Myanmar", x: 41.5, y: 61.5, tier: "minor" },
-  { name: "Laos", x: 54.5, y: 58.5, tier: "minor" },
+  { name: "Thailand", x: 47, y: 55.5, tier: "hero" },
+  { name: "Philippines", x: 68.5, y: 57.5, tier: "major" },
+  { name: "Vietnam", x: 60.5, y: 64.5, tier: "major" },
+  { name: "Myanmar", x: 38.5, y: 62, tier: "minor" },
+  { name: "Laos", x: 57.5, y: 60, tier: "minor" },
   { name: "Cambodia", x: 55.5, y: 71.5, tier: "minor" },
   { name: "Malaysia", x: 45.5, y: 78, tier: "minor" },
   { name: "Singapore", x: 53.5, y: 82, tier: "minor" },
@@ -64,8 +64,8 @@ const MAP_LABELS: { name: string; x: number; y: number; tier: "hero" | "major" |
 
 const MAP_LABEL_STYLES: Record<"hero" | "major" | "minor", string> = {
   hero: "text-lg font-bold tracking-wide sm:text-2xl text-primary-foreground",
-  major: "text-sm font-semibold sm:text-base text-primary-foreground/95",
-  minor: "text-[10px] font-medium sm:text-xs text-primary-foreground/75",
+  major: "text-sm font-semibold sm:text-base text-primary-foreground",
+  minor: "text-[10px] font-medium sm:text-xs text-primary-foreground/85",
 };
 
 const PILLARS = [
