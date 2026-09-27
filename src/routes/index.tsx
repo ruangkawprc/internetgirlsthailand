@@ -187,11 +187,11 @@ function Index() {
       {/* WHAT WE DO */}
       <section id="what-we-do" className="scroll-mt-24 px-5 pb-24 sm:px-8 sm:pb-32">
         <div className="mx-auto max-w-6xl">
-          <p className="text-center text-xs font-bold uppercase tracking-[0.3em] text-primary">What we do</p>
+          <p className="text-center text-xs font-bold uppercase tracking-[0.3em] text-brand-dark">What we do</p>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {PILLARS.map((p, i) => (
               <article key={p.label} className={`flex flex-col rounded-[2rem] p-8 shadow-soft transition-transform hover:-translate-y-1 sm:p-10 ${i === 1 ? "bg-brand-gradient text-primary-foreground" : "border border-border bg-card"}`}>
-                <span className={`w-fit rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] ${i === 1 ? "bg-primary-foreground/20" : "bg-secondary text-primary"}`}>{p.label}</span>
+                <span className={`w-fit rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] ${i === 1 ? "bg-primary-foreground/20" : "bg-secondary text-brand-dark"}`}>{p.label}</span>
                 <h3 className="mt-8 font-display text-3xl italic">{p.title}</h3>
                 <p className={`mt-4 leading-7 ${i === 1 ? "text-primary-foreground/90" : "text-muted-foreground"}`}>{p.body}</p>
               </article>
@@ -225,7 +225,7 @@ function Index() {
       {/* EVENTS */}
       <section id="events" className="scroll-mt-24 px-5 py-24 sm:px-8 sm:py-32">
         <div className="mx-auto max-w-4xl text-center">
-          <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary">Upcoming event</p>
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-brand-dark">Upcoming event</p>
           <h2 className="mt-4 font-display text-4xl sm:text-6xl">What's happening in <em className="text-gradient">Thailand?</em></h2>
           <div className="mt-12 rounded-[2rem] border border-border bg-card p-8 text-left shadow-soft sm:p-12">
             {UPCOMING_EVENT ? (
@@ -254,11 +254,11 @@ function Index() {
       {/* FAQ */}
       <section id="faq" className="scroll-mt-24 px-5 pb-24 sm:px-8 sm:pb-32">
         <div className="mx-auto max-w-3xl">
-          <h2 className="text-center font-display text-4xl text-brand-mid sm:text-6xl">FAQ</h2>
+          <h2 className="text-center font-display text-4xl text-brand-dark sm:text-6xl">FAQ</h2>
           <Accordion type="single" collapsible className="mt-12 space-y-3">
             {FAQ.map((item, i) => (
               <AccordionItem key={item.q} value={`q${i}`} className="rounded-3xl border border-border bg-card px-6 shadow-soft last:border-b">
-                <AccordionTrigger className="py-5 text-left text-base font-semibold hover:no-underline sm:text-lg [&>svg]:text-brand-mid">{item.q}</AccordionTrigger>
+                <AccordionTrigger className="py-5 text-left text-base font-semibold hover:no-underline sm:text-lg [&>svg]:text-brand-dark">{item.q}</AccordionTrigger>
                 <AccordionContent className="space-y-3 pb-6 text-base leading-7 text-muted-foreground">
                   {item.a.map((para) => <p key={para}>{para}</p>)}
                 </AccordionContent>
