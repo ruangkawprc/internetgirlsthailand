@@ -4,4 +4,4 @@
 - [x] Add responsive behavior and form states.
 - [x] Apply the enhanced logo and its palette.
 - [x] Verify desktop and mobile presentation.
-- [ ] Replace the circular logo treatment and add Thai supporting copy.
+- [x] Replace the circular logo treatment and add Thai supporting copy.
