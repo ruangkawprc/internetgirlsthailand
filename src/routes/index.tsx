@@ -320,7 +320,7 @@ function Index() {
       <footer className="px-5 py-10 sm:px-8">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-muted-foreground sm:justify-between">
           <p>In partnership with <a href={PARTNER} target="_blank" rel="noreferrer" className="font-semibold text-primary hover:underline">Internet Girls</a></p>
-          <p>© 2026 Internet Girls Thailand. All rights reserved.</p>
+          <p className="text-xs">© 2026 Internet Girls Thailand. All rights reserved.</p>
           <div className="flex gap-2">
             <Button asChild variant="outline" size="icon" className="rounded-full" aria-label="Instagram"><a href={INSTAGRAM} target="_blank" rel="noreferrer"><Instagram /></a></Button>
             <Button asChild variant="outline" size="icon" className="rounded-full" aria-label="Facebook"><a href={FACEBOOK} target="_blank" rel="noreferrer"><Facebook /></a></Button>
