@@ -1,12 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, Facebook, FileSpreadsheet, Instagram, LoaderCircle, Menu, Sparkles, X } from "lucide-react";
+import { ArrowRight, Facebook, FileSpreadsheet, Instagram, LoaderCircle, Menu, X } from "lucide-react";
 import { type FormEvent, useState } from "react";
 import * as XLSX from "xlsx";
-import logo from "@/assets/internet-girls-thailand-logo.png";
+import asiaMap from "@/assets/asia-dot-map.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const WAITLIST_KEY = "igt-waitlist";
+const INSTAGRAM = "https://www.instagram.com/internetgirls.th/";
+const FACEBOOK = "https://www.facebook.com/internetgirlsthailand/";
+const PARTNER = "https://internet-girls-ai.vercel.app/";
 
 type WaitlistEntry = { email: string; joinedAt: string };
 
@@ -38,19 +42,55 @@ function downloadWaitlist() {
   XLSX.writeFile(workbook, "internet-girls-thailand-waitlist.xlsx");
 }
 
+// Set to an event object to show it; null shows the "coming soon" state.
+const UPCOMING_EVENT: null | { name: string; description: string; date: string; href: string } = null;
+
+const PILLARS = [
+  { label: "Learn", title: "Free AI workshops", body: "Beginner friendly, hands on sessions that make AI easier to understand and use, with no technical background required." },
+  { label: "Build", title: "Learn by doing", body: "Use AI to create something yourself, from AI agents and websites to creative projects and practical tools." },
+  { label: "Connect", title: "Find your people", body: "Meet women who are curious about AI, share what you're learning, and build a community together." },
+];
+
+const FAQ: { q: string; a: string[] }[] = [
+  { q: "Who can join?", a: ["Anyone can join. You don't need to be studying or working in tech, and you don't need any previous AI experience.", "Whether you're a student, professional, founder, creator, or simply curious about AI, you're welcome in the Internet Girls Thailand community."] },
+  { q: "Do I need AI or coding experience?", a: ["No. Our events are designed to be accessible to people at different levels, including complete beginners. Specific events may have their own requirements, which we'll clearly state when applicable."] },
+  { q: "Are the events free?", a: ["Yes. Internet Girls Thailand is committed to making AI learning accessible, so our community events and learning activities are free to participants."] },
+  { q: "What kind of events do you host?", a: ["We host different types of events, including hands on AI workshops, speaker sessions, panel discussions, and community meetups.", "Topics can range from practical AI tools and AI agents to career journeys, emerging technology, creativity, and how AI is changing different industries."] },
+  { q: "How often do you host events?", a: ["We aim to host events every 1–2 months, primarily in Bangkok.", "As the community grows, we hope to expand our activities and reach more women across Thailand."] },
+  { q: "Where are events held?", a: ["Our current focus is Bangkok, where we host in person workshops, speaker sessions, panels, and community events."] },
+  { q: "How can I stay updated?", a: ["Follow @internetgirlsthailand on Instagram and join our community to hear about upcoming events, workshops, speaker sessions, and other opportunities."] },
+];
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Internet Girls Thailand — Helping women get ahead with AI" },
-      { name: "description", content: "A community for women in Thailand to learn, explore, and grow with AI." },
+      { title: "Internet Girls Thailand — Making AI accessible to more women" },
+      { name: "description", content: "A community for women to learn, experiment, and build with AI for free. Free AI workshops and events, starting in Bangkok." },
       { property: "og:title", content: "Internet Girls Thailand" },
-      { property: "og:description", content: "Helping more women get ahead with AI." },
+      { property: "og:description", content: "Making AI accessible to more women in Thailand." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Index,
 });
+
+function Star({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <defs>
+        <linearGradient id="star-g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="oklch(0.58 0.2 255)" />
+          <stop offset="55%" stopColor="oklch(0.68 0.15 295)" />
+          <stop offset="100%" stopColor="oklch(0.76 0.09 215)" />
+        </linearGradient>
+      </defs>
+      <path fill="url(#star-g)" d="M12 1.5l3.1 6.6 7.2.8-5.4 4.9 1.5 7.1L12 17.3l-6.4 3.6 1.5-7.1L1.7 8.9l7.2-.8z" />
+    </svg>
+  );
+}
+
+const pillBtn = "h-13 rounded-full px-7 text-xs font-bold uppercase tracking-[0.14em]";
 
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -60,13 +100,11 @@ function Index() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
-    if (!validEmail) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
       setStatus("error");
       setMessage("Please enter a valid email address.");
       return;
     }
-
     setStatus("loading");
     setMessage("");
     try {
@@ -86,75 +124,166 @@ function Index() {
     }
   }
 
+  const navLinks = [
+    { href: "#what-we-do", label: "What we do" },
+    { href: "#events", label: "Events" },
+    { href: "#faq", label: "FAQ" },
+  ];
+
   return (
     <main className="min-h-screen bg-background text-foreground">
       <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4">
-        <div className="mx-auto flex max-w-6xl items-center justify-between rounded-full border border-border/70 bg-background/85 px-4 py-2.5 shadow-soft backdrop-blur-xl sm:px-5">
-          <a href="#top" className="flex items-center gap-3" aria-label="Internet Girls Thailand home">
-            <img src={logo} alt="" className="size-10 rounded-full object-cover shadow-soft" />
-            <span className="hidden text-sm font-bold sm:inline">Internet Girls Thailand</span>
+        <div className="mx-auto flex max-w-6xl items-center justify-between rounded-full border border-border/60 bg-background/85 px-4 py-2 shadow-soft backdrop-blur-md sm:px-5">
+          <a href="#top" className="flex items-center gap-2.5" aria-label="Internet Girls Thailand home">
+            <Star className="size-9" />
+            <span className="font-display text-lg font-semibold italic">internet girls <span className="text-gradient">thailand</span></span>
           </a>
-          <nav className="hidden items-center gap-7 text-sm font-semibold md:flex" aria-label="Main navigation">
-            <Button asChild variant="brand" size="pill"><a href="#waitlist">Join the Waitlist</a></Button>
+          <nav className="hidden items-center gap-7 text-sm font-medium md:flex" aria-label="Main navigation">
+            {navLinks.map((l) => <a key={l.href} href={l.href} className="transition-colors hover:text-primary">{l.label}</a>)}
+            <Button asChild variant="brand" className={`${pillBtn} h-10 px-5`}><a href="#join">Join the community</a></Button>
           </nav>
           <Button variant="ghost" size="icon" className="rounded-full md:hidden" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen}>
             {menuOpen ? <X /> : <Menu />}
           </Button>
         </div>
         {menuOpen && (
-          <nav className="mx-auto mt-2 grid max-w-6xl gap-2 rounded-lg border border-border bg-background p-4 shadow-soft md:hidden" aria-label="Mobile navigation">
-            <Button asChild variant="brand" size="pill"><a href="#waitlist" onClick={() => setMenuOpen(false)}>Join the Waitlist</a></Button>
+          <nav className="mx-auto mt-2 grid max-w-6xl gap-1 rounded-3xl border border-border bg-background p-4 shadow-soft md:hidden" aria-label="Mobile navigation">
+            {navLinks.map((l) => <a key={l.href} href={l.href} onClick={() => setMenuOpen(false)} className="rounded-full px-4 py-3 font-medium hover:bg-muted">{l.label}</a>)}
+            <Button asChild variant="brand" className={pillBtn}><a href="#join" onClick={() => setMenuOpen(false)}>Join the community</a></Button>
           </nav>
         )}
       </header>
 
-      <section id="top" className="bg-page-gradient relative flex min-h-[92svh] items-center overflow-hidden px-5 pb-16 pt-32 sm:px-8 sm:pt-36">
-        <div className="absolute left-[8%] top-[22%] size-3 rotate-12 bg-brand-lime" aria-hidden="true" />
-        <div className="absolute bottom-[18%] right-[8%] size-5 rounded-full border-4 border-primary/40" aria-hidden="true" />
-        <div className="mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
-          <div className="max-w-3xl">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background/70 px-4 py-2 text-sm font-semibold text-primary backdrop-blur">
-              <Sparkles className="size-4" /> A community for curious women
-            </div>
-            <h1 className="font-display text-5xl leading-[0.98] sm:text-7xl lg:text-8xl">Helping more women get ahead with <span className="text-primary">AI.</span></h1>
-            <p id="about" className="mt-5 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg">Internet Girls Thailand is a community for women to learn, explore, and grow with AI.</p>
-            <p className="mt-2 max-w-xl text-sm leading-6 text-muted-foreground">คอมมูนิตี้สำหรับผู้หญิงที่อยากเรียนรู้ ทดลอง และเติบโตไปกับ AI</p>
-            <div className="mt-9 flex flex-wrap items-center gap-4">
-              <Button asChild variant="brandLight" size="pill"><a href="#waitlist">Join the Waitlist <ArrowRight /></a></Button>
-              <div className="flex items-center gap-2">
-                <Button asChild variant="outline" size="icon" className="rounded-full bg-background/60" aria-label="Instagram"><a href="https://www.instagram.com/internetgirls.th/" target="_blank" rel="noreferrer"><Instagram /></a></Button>
-                <Button asChild variant="outline" size="icon" className="rounded-full bg-background/60" aria-label="Facebook"><a href="https://www.facebook.com/internetgirlsthailand/" target="_blank" rel="noreferrer"><Facebook /></a></Button>
-              </div>
-            </div>
-          </div>
-          <div id="community" className="relative mx-auto w-full max-w-md lg:max-w-none">
-            <div className="float-slow relative mx-auto flex aspect-square w-[min(82vw,470px)] items-center justify-center rounded-full bg-brand-gradient p-10 shadow-brand sm:p-14">
-              <img src={logo} alt="Internet Girls Thailand" className="w-full rounded-full object-contain" />
-            </div>
-            <div className="absolute -bottom-4 left-0 -rotate-3 rounded-md bg-brand-lime px-5 py-3 text-sm font-bold text-brand-ink shadow-soft sm:left-4">เรียนรู้ · ทดลอง · เติบโต</div>
+      {/* HERO */}
+      <section id="top" className="bg-page-gradient relative flex min-h-svh items-center overflow-hidden px-5 pb-20 pt-36 text-primary-foreground sm:px-8">
+        <div className="mx-auto w-full max-w-5xl text-center">
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary-foreground/85 sm:text-sm">Internet Girls Thailand</p>
+          <h1 className="mx-auto mt-6 max-w-4xl font-display text-5xl font-medium leading-[1.02] sm:text-7xl lg:text-[5.5rem]">
+            Making AI accessible to <em className="text-gradient-light pr-1">more women</em> in Thailand.
+          </h1>
+          <p className="mx-auto mt-7 max-w-2xl text-lg font-semibold sm:text-xl">A community for women to learn, experiment, and build with AI for free.</p>
+          <p className="mx-auto mt-4 max-w-2xl leading-7 text-primary-foreground/85">
+            Proudly run in partnership with <a href={PARTNER} target="_blank" rel="noreferrer" className="underline underline-offset-4">Internet Girls</a>, we bring free AI workshops, events, and community opportunities to women across Thailand, starting in Bangkok.
+          </p>
+          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Button asChild className={`${pillBtn} bg-background text-foreground shadow-soft hover:-translate-y-0.5 hover:bg-background/90`}><a href="#join">Join the community <ArrowRight /></a></Button>
+            <Button asChild variant="outline" className={`${pillBtn} border-primary-foreground/70 bg-transparent text-primary-foreground hover:bg-primary-foreground/15 hover:text-primary-foreground`}><a href="#events">See upcoming events</a></Button>
           </div>
         </div>
       </section>
 
-      <section id="waitlist" className="relative overflow-hidden bg-primary px-5 py-20 text-primary-foreground sm:px-8 sm:py-28">
-        <div className="mx-auto grid max-w-5xl items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
-          <div>
-            <p className="mb-3 text-sm font-bold uppercase text-brand-lime">Stay in the loop</p>
-            <h2 className="font-display text-4xl leading-tight sm:text-6xl">Be the first to know.</h2>
-            <p className="mt-5 max-w-lg leading-7 text-primary-foreground/80">Join the Internet Girls Thailand waitlist to hear about upcoming events, workshops, and community updates.</p>
-            <p className="mt-2 max-w-lg text-sm leading-6 text-primary-foreground/70">เข้าร่วม Waitlist เพื่อรับข่าวสารกิจกรรม เวิร์กช็อป และอัปเดตจากคอมมูนิตี้</p>
+      {/* MISSION */}
+      <section className="px-5 py-24 sm:px-8 sm:py-32">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="font-display text-4xl leading-tight sm:text-6xl">AI is changing the way we <em className="text-gradient">learn, work, and create.</em></h2>
+          <p className="mt-8 text-xl font-bold sm:text-2xl">We believe women should have the opportunity to be part of that change.</p>
+          <div className="mt-8 grid gap-6 text-lg leading-8 text-muted-foreground md:grid-cols-2">
+            <p>Internet Girls Thailand creates free, accessible spaces for women to learn about AI, try new tools, build real things, and meet others who are learning alongside them.</p>
+            <p>Starting with in person workshops in Bangkok, we're building a local community that can grow across Thailand.</p>
           </div>
-          <form onSubmit={handleSubmit} noValidate className="rounded-lg bg-background p-5 text-foreground shadow-soft sm:p-7">
+        </div>
+      </section>
+
+      {/* WHAT WE DO */}
+      <section id="what-we-do" className="scroll-mt-24 px-5 pb-24 sm:px-8 sm:pb-32">
+        <div className="mx-auto max-w-6xl">
+          <p className="text-center text-xs font-bold uppercase tracking-[0.3em] text-primary">What we do</p>
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {PILLARS.map((p, i) => (
+              <article key={p.label} className={`flex flex-col rounded-[2rem] p-8 shadow-soft transition-transform hover:-translate-y-1 sm:p-10 ${i === 1 ? "bg-brand-gradient text-primary-foreground" : "border border-border bg-card"}`}>
+                <span className={`w-fit rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] ${i === 1 ? "bg-primary-foreground/20" : "bg-secondary text-primary"}`}>{p.label}</span>
+                <h3 className="mt-8 font-display text-3xl italic">{p.title}</h3>
+                <p className={`mt-4 leading-7 ${i === 1 ? "text-primary-foreground/90" : "text-muted-foreground"}`}>{p.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* THAILAND */}
+      <section className="bg-page-gradient overflow-hidden px-5 py-24 text-primary-foreground sm:px-8 sm:py-32">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
+          <div>
+            <h2 className="font-display text-4xl leading-tight sm:text-6xl">Starting in Bangkok. <em className="text-gradient-light">Building across Thailand.</em></h2>
+            <p className="mt-8 text-lg font-semibold">We're starting locally with free in person workshops and community events in Bangkok.</p>
+            <p className="mt-4 leading-7 text-primary-foreground/85">Our goal is to create a space where women in Thailand can access AI education, gain practical skills, and build confidence with technology, regardless of their background or level of experience.</p>
+            <p className="mt-4 leading-7 text-primary-foreground/85">As the community grows, we hope to bring more learning opportunities and connections to women across Thailand.</p>
+            <p className="mt-8 inline-flex flex-wrap items-center gap-2 rounded-full bg-primary-foreground/15 px-5 py-3 text-sm font-bold">Bangkok → Thailand → Southeast Asia 🌏</p>
+          </div>
+          <div className="relative">
+            <img src={asiaMap} alt="Map of Asia with Thailand highlighted" width={1280} height={1024} loading="lazy" className="w-full opacity-90 brightness-0 invert" />
+            <div className="absolute" style={{ left: "48.8%", top: "67.5%" }} aria-hidden="true">
+              <span className="radar-ping absolute left-0 top-0 size-40 rounded-full border-2 border-primary-foreground/80" />
+              <span className="radar-ping absolute left-0 top-0 size-40 rounded-full border-2 border-primary-foreground/80 [animation-delay:0.8s]" />
+              <span className="radar-ping absolute left-0 top-0 size-40 rounded-full bg-primary-foreground/20 [animation-delay:1.6s]" />
+              <span className="absolute left-0 top-0 size-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-strong ring-4 ring-primary-foreground" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* EVENTS */}
+      <section id="events" className="scroll-mt-24 px-5 py-24 sm:px-8 sm:py-32">
+        <div className="mx-auto max-w-4xl text-center">
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary">Upcoming event</p>
+          <h2 className="mt-4 font-display text-4xl sm:text-6xl">What's happening in <em className="text-gradient">Thailand?</em></h2>
+          <div className="mt-12 rounded-[2rem] border border-border bg-card p-8 text-left shadow-soft sm:p-12">
+            {UPCOMING_EVENT ? (
+              <>
+                <h3 className="font-display text-3xl">{UPCOMING_EVENT.name}</h3>
+                <p className="mt-3 leading-7 text-muted-foreground">{UPCOMING_EVENT.description}</p>
+                <div className="mt-6 flex flex-wrap gap-3 text-sm font-semibold">
+                  <span>📍 Bangkok</span><span>📅 {UPCOMING_EVENT.date}</span><span className="text-primary">Free · Beginner friendly</span>
+                </div>
+                <div className="mt-8 flex flex-wrap items-center gap-5">
+                  <Button asChild variant="brand" className={pillBtn}><a href={UPCOMING_EVENT.href}>Register <ArrowRight /></a></Button>
+                  <a href={INSTAGRAM} target="_blank" rel="noreferrer" className="font-semibold text-primary hover:underline">See all events →</a>
+                </div>
+              </>
+            ) : (
+              <div className="text-center">
+                <h3 className="font-display text-3xl italic sm:text-4xl">We're just getting started.</h3>
+                <p className="mx-auto mt-4 max-w-md leading-7 text-muted-foreground">Our first Internet Girls Thailand workshops and events are coming soon.</p>
+                <Button asChild variant="brand" className={`${pillBtn} mt-8`}><a href={INSTAGRAM} target="_blank" rel="noreferrer">Follow us for updates <ArrowRight /></a></Button>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section id="faq" className="scroll-mt-24 px-5 pb-24 sm:px-8 sm:pb-32">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="text-center font-display text-4xl sm:text-6xl">FAQ</h2>
+          <Accordion type="single" collapsible className="mt-12 space-y-3">
+            {FAQ.map((item, i) => (
+              <AccordionItem key={item.q} value={`q${i}`} className="rounded-3xl border border-border bg-card px-6 shadow-soft last:border-b">
+                <AccordionTrigger className="py-5 text-left text-base font-semibold hover:no-underline sm:text-lg">{item.q}</AccordionTrigger>
+                <AccordionContent className="space-y-3 pb-6 text-base leading-7 text-muted-foreground">
+                  {item.a.map((para) => <p key={para}>{para}</p>)}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      </section>
+
+      {/* JOIN */}
+      <section id="join" className="bg-page-gradient scroll-mt-20 px-5 py-24 text-primary-foreground sm:px-8 sm:py-28">
+        <div className="mx-auto grid max-w-5xl items-center gap-10 lg:grid-cols-2">
+          <div>
+            <Star className="size-14" />
+            <h2 className="mt-6 font-display text-4xl leading-tight sm:text-6xl">Join the <em className="text-gradient-light">community.</em></h2>
+          </div>
+          <form onSubmit={handleSubmit} noValidate className="rounded-[2rem] bg-background p-6 text-foreground shadow-soft sm:p-8">
             <label htmlFor="email" className="text-sm font-bold">Your email</label>
             <div className="mt-2 flex flex-col gap-3 sm:flex-row">
               <Input id="email" type="email" value={email} onChange={(event) => { setEmail(event.target.value); if (status === "error") setStatus("idle"); }} placeholder="you@example.com" autoComplete="email" maxLength={254} disabled={status === "loading"} aria-describedby="form-message" className="h-12 rounded-full bg-background px-5" />
-              <Button type="submit" variant="brandLight" size="pill" disabled={status === "loading"} className="shrink-0">
-                {status === "loading" ? <><LoaderCircle className="animate-spin" /> Joining…</> : "Join the Waitlist"}
+              <Button type="submit" variant="brand" disabled={status === "loading"} className={`${pillBtn} h-12 shrink-0`}>
+                {status === "loading" ? <><LoaderCircle className="animate-spin" /> Joining…</> : "Join"}
               </Button>
             </div>
-            <p id="form-message" aria-live="polite" className={`mt-3 min-h-5 text-sm font-semibold ${status === "error" ? "text-destructive" : status === "success" ? "text-primary" : "text-muted-foreground"}`}>
-              {message}
-            </p>
+            <p id="form-message" aria-live="polite" className={`mt-3 min-h-5 text-sm font-semibold ${status === "error" ? "text-destructive" : status === "success" ? "text-primary" : "text-muted-foreground"}`}>{message}</p>
             <Button type="button" variant="outline" size="sm" onClick={downloadWaitlist} className="mt-2 rounded-full">
               <FileSpreadsheet /> Download waitlist (.xlsx)
             </Button>
@@ -162,22 +291,15 @@ function Index() {
         </div>
       </section>
 
-      <section id="partnership" className="bg-page-gradient px-5 py-16 sm:px-8 sm:py-20">
-        <div className="mx-auto flex max-w-2xl flex-col items-center gap-5 text-center">
-          <p className="text-sm font-bold uppercase tracking-wide text-primary">Partnership</p>
-          <h2 className="font-display text-3xl leading-tight sm:text-4xl">
-            In partnership with <a href="https://internet-girls-ai.vercel.app/" target="_blank" rel="noreferrer" className="text-primary underline decoration-primary/40 underline-offset-4 transition-colors hover:text-primary-strong">Internet Girls</a>
-          </h2>
-          <p className="max-w-xl leading-7 text-muted-foreground">
-            Internet Girls Thailand is proudly run in partnership with Internet Girls, spreading free AI learning for women throughout Southeast Asia.
-          </p>
-          <Button asChild variant="brand" size="pill">
-            <a href="https://internet-girls-ai.vercel.app/" target="_blank" rel="noreferrer">
-              Visit Internet Girls <ArrowRight />
-            </a>
-          </Button>
+      <footer className="px-5 py-10 sm:px-8">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 text-sm text-muted-foreground sm:flex-row">
+          <p>In partnership with <a href={PARTNER} target="_blank" rel="noreferrer" className="font-semibold text-primary hover:underline">Internet Girls</a></p>
+          <div className="flex gap-2">
+            <Button asChild variant="outline" size="icon" className="rounded-full" aria-label="Instagram"><a href={INSTAGRAM} target="_blank" rel="noreferrer"><Instagram /></a></Button>
+            <Button asChild variant="outline" size="icon" className="rounded-full" aria-label="Facebook"><a href={FACEBOOK} target="_blank" rel="noreferrer"><Facebook /></a></Button>
+          </div>
         </div>
-      </section>
+      </footer>
     </main>
   );
 }
