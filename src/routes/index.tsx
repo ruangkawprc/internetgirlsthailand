@@ -139,6 +139,23 @@ function Index() {
           </form>
         </div>
       </section>
+
+      <section id="partnership" className="bg-page-gradient px-5 py-16 sm:px-8 sm:py-20">
+        <div className="mx-auto flex max-w-2xl flex-col items-center gap-5 text-center">
+          <p className="text-sm font-bold uppercase tracking-wide text-primary">Partnership</p>
+          <h2 className="font-display text-3xl leading-tight sm:text-4xl">
+            In partnership with <a href="https://internet-girls-ai.vercel.app/" target="_blank" rel="noreferrer" className="text-primary underline decoration-primary/40 underline-offset-4 transition-colors hover:text-primary-strong">Internet Girls</a>
+          </h2>
+          <p className="max-w-xl leading-7 text-muted-foreground">
+            Internet Girls Thailand is proudly run in partnership with Internet Girls, spreading free AI learning for women throughout Southeast Asia.
+          </p>
+          <Button asChild variant="brand" size="pill">
+            <a href="https://internet-girls-ai.vercel.app/" target="_blank" rel="noreferrer">
+              Visit Internet Girls <ArrowRight />
+            </a>
+          </Button>
+        </div>
+      </section>
     </main>
   );
 }
