@@ -166,8 +166,8 @@ function Index() {
             Proudly run in partnership with <a href={PARTNER} target="_blank" rel="noreferrer" className="underline underline-offset-4">Internet Girls</a>, we bring free AI workshops, events, and community opportunities to women across Thailand, starting in Bangkok.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button asChild className={`${pillBtn} bg-background text-foreground shadow-soft hover:-translate-y-0.5 hover:bg-background/90`}><a href="#join">Join the community <ArrowRight /></a></Button>
-            <Button asChild variant="outline" className={`${pillBtn} border-primary-foreground/70 bg-transparent text-primary-foreground hover:bg-primary-foreground/15 hover:text-primary-foreground`}><a href="#events">See upcoming events</a></Button>
+            <Button asChild variant="brand" className={`${pillBtn} h-13`}><a href="#join">Join the community <ArrowRight /></a></Button>
+            <Button asChild variant="brandOutline" className={pillBtn}><a href="#events">See upcoming events</a></Button>
           </div>
         </div>
       </section>
