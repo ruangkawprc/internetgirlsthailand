@@ -5,27 +5,12 @@ import asiaMap from "@/assets/asia-dot-map.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { joinWaitlist } from "@/lib/waitlist.functions";
 
-const WAITLIST_KEY = "igt-waitlist";
 const INSTAGRAM = "https://www.instagram.com/internetgirls.th/";
 const FACEBOOK = "https://www.facebook.com/internetgirlsthailand/";
 const PARTNER = "https://internet-girls-ai.vercel.app/";
 
-type WaitlistEntry = { email: string; joinedAt: string };
-
-function loadWaitlist(): WaitlistEntry[] {
-  try {
-    const raw = window.localStorage.getItem(WAITLIST_KEY);
-    const parsed = raw ? JSON.parse(raw) : [];
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveWaitlist(entries: WaitlistEntry[]) {
-  window.localStorage.setItem(WAITLIST_KEY, JSON.stringify(entries));
-}
 
 
 // Set to an event object to show it; null shows the "coming soon" state.
@@ -117,15 +102,9 @@ function Index() {
     setStatus("loading");
     setMessage("");
     try {
-      await new Promise((resolve) => window.setTimeout(resolve, 700));
-      const entries = loadWaitlist();
-      const normalized = email.trim().toLowerCase();
-      if (!entries.some((entry) => entry.email === normalized)) {
-        entries.push({ email: normalized, joinedAt: new Date().toISOString() });
-        saveWaitlist(entries);
-      }
+      const result = await joinWaitlist({ data: { email: email.trim() } });
       setStatus("success");
-      setMessage("You're on the list!");
+      setMessage(result.status === "duplicate" ? "You're already on the list!" : "You're on the list!");
       setEmail("");
     } catch {
       setStatus("error");
