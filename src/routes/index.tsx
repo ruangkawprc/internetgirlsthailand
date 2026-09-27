@@ -167,7 +167,7 @@ function Index() {
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button asChild variant="brand" className={`${pillBtn} h-13`}><a href="#join">Join the community <ArrowRight /></a></Button>
-            <Button asChild variant="brandOutline" className={pillBtn}><a href="#events">See upcoming events</a></Button>
+            <Button asChild variant="brandOutline" className={pillBtn}><a href="#events"><span className="text-gradient">See upcoming events</span></a></Button>
           </div>
         </div>
       </section>
