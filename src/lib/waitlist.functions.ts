@@ -30,8 +30,16 @@ export const joinWaitlist = createServerFn({ method: "POST" })
       throw new Error(error.message);
     }
 
-    // TODO(welcome-email): send the welcome template here once the sender
-    // domain is connected (see src/lib/email-templates/ after scaffolding).
+    // Welcome email — failures never block the signup itself.
+    try {
+      const { sendTemplateEmail } = await import("@/lib/email-templates/send-email");
+      await sendTemplateEmail("welcome", data.email, {
+        templateData: {},
+        idempotencyKey: `welcome-${data.email}`,
+      });
+    } catch (e) {
+      console.error("welcome email failed", e);
+    }
 
     return { status: "joined" as const };
   });
