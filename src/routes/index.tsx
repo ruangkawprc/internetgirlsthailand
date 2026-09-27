@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight, Facebook, Instagram, LoaderCircle, Menu, Sparkles, X } from "lucide-react";
 import { type FormEvent, useState } from "react";
-import logo from "@/assets/internet-girls-thailand-logo.png";
+import logo from "@/assets/internet-girls-thailand-logo-lettering.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -52,7 +52,9 @@ function Index() {
       <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4">
         <div className="mx-auto flex max-w-6xl items-center justify-between rounded-full border border-border/70 bg-background/85 px-4 py-2.5 shadow-soft backdrop-blur-xl sm:px-5">
           <a href="#top" className="flex items-center gap-3" aria-label="Internet Girls Thailand home">
-            <img src={logo} alt="" className="size-10 rounded-full object-cover" />
+            <span className="bg-brand-gradient flex h-10 w-14 items-center justify-center rounded-md px-1.5">
+              <img src={logo} alt="" className="w-full object-contain" />
+            </span>
             <span className="hidden text-sm font-bold sm:inline">Internet Girls Thailand</span>
           </a>
           <nav className="hidden items-center gap-7 text-sm font-semibold md:flex" aria-label="Main navigation">
@@ -82,7 +84,9 @@ function Index() {
               <Sparkles className="size-4" /> A community for curious women
             </div>
             <h1 className="font-display text-5xl leading-[0.98] sm:text-7xl lg:text-8xl">Helping more women get ahead with <span className="text-primary">AI.</span></h1>
-            <p id="about" className="mt-7 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg">Internet Girls Thailand is a community for women to learn, explore, and grow with AI.</p>
+            <p className="mt-5 max-w-xl text-lg font-semibold text-primary sm:text-xl">ช่วยให้ผู้หญิงก้าวไปข้างหน้าด้วย AI</p>
+            <p id="about" className="mt-5 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg">Internet Girls Thailand is a community for women to learn, explore, and grow with AI.</p>
+            <p className="mt-2 max-w-xl text-sm leading-6 text-muted-foreground">คอมมูนิตี้สำหรับผู้หญิงที่อยากเรียนรู้ ทดลอง และเติบโตไปกับ AI</p>
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <Button asChild variant="brandLight" size="pill"><a href="#waitlist">Join the Waitlist <ArrowRight /></a></Button>
               <div className="flex items-center gap-2">
@@ -92,10 +96,10 @@ function Index() {
             </div>
           </div>
           <div id="community" className="relative mx-auto w-full max-w-md lg:max-w-none">
-            <div className="float-slow relative mx-auto aspect-square w-[min(78vw,430px)] rounded-full bg-brand-gradient p-3 shadow-brand">
-              <img src={logo} alt="Internet Girls Thailand" className="size-full rounded-full object-cover" />
+            <div className="float-slow relative mx-auto flex aspect-[1.18/1] w-[min(82vw,470px)] rotate-2 items-center justify-center rounded-lg bg-brand-gradient p-12 shadow-brand sm:p-16">
+              <img src={logo} alt="Internet Girls Thailand" className="w-full object-contain" />
             </div>
-            <div className="absolute -bottom-4 left-0 -rotate-3 rounded-md bg-brand-lime px-5 py-3 text-sm font-bold text-brand-ink shadow-soft sm:left-4">Learn · Explore · Grow</div>
+            <div className="absolute -bottom-4 left-0 -rotate-3 rounded-md bg-brand-lime px-5 py-3 text-sm font-bold text-brand-ink shadow-soft sm:left-4">เรียนรู้ · ทดลอง · เติบโต</div>
           </div>
         </div>
       </section>
@@ -105,7 +109,9 @@ function Index() {
           <div>
             <p className="mb-3 text-sm font-bold uppercase text-brand-lime">Stay in the loop</p>
             <h2 className="font-display text-4xl leading-tight sm:text-6xl">Be the first to know. 💜</h2>
+            <p className="mt-3 text-lg font-semibold text-brand-lime">รู้ก่อนใคร ไม่พลาดทุกข่าวสาร</p>
             <p className="mt-5 max-w-lg leading-7 text-primary-foreground/80">Join the Internet Girls Thailand waitlist to hear about upcoming events, workshops, and community updates.</p>
+            <p className="mt-2 max-w-lg text-sm leading-6 text-primary-foreground/70">เข้าร่วม Waitlist เพื่อรับข่าวสารกิจกรรม เวิร์กช็อป และอัปเดตจากคอมมูนิตี้</p>
           </div>
           <form onSubmit={handleSubmit} noValidate className="rounded-lg bg-background p-5 text-foreground shadow-soft sm:p-7">
             <label htmlFor="email" className="text-sm font-bold">Your email</label>
@@ -116,7 +122,7 @@ function Index() {
               </Button>
             </div>
             <p id="form-message" aria-live="polite" className={`mt-3 min-h-5 text-sm font-semibold ${status === "error" ? "text-destructive" : status === "success" ? "text-primary" : "text-muted-foreground"}`}>
-              {message || "No spam, just useful updates and community news."}
+              {message || "No spam — มีเฉพาะข่าวสารดี ๆ จากคอมมูนิตี้"}
             </p>
           </form>
         </div>
