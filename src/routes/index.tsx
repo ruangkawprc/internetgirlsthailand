@@ -56,8 +56,6 @@ function Index() {
             <span className="hidden text-sm font-bold sm:inline">Internet Girls Thailand</span>
           </a>
           <nav className="hidden items-center gap-7 text-sm font-semibold md:flex" aria-label="Main navigation">
-            <a href="#about" className="transition-colors hover:text-primary">About</a>
-            <a href="#community" className="transition-colors hover:text-primary">Community</a>
             <Button asChild variant="brand" size="pill"><a href="#waitlist">Join the Waitlist</a></Button>
           </nav>
           <Button variant="ghost" size="icon" className="rounded-full md:hidden" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen}>
