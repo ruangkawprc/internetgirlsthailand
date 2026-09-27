@@ -63,8 +63,8 @@ const MAP_LABELS: { name: string; x: number; y: number; tier: "hero" | "major" |
 ];
 
 const MAP_LABEL_STYLES: Record<"hero" | "major" | "minor", string> = {
-  hero: "text-lg font-bold tracking-wide sm:text-2xl text-primary-foreground",
-  major: "text-sm font-semibold sm:text-base text-primary-foreground",
+  hero: "text-lg font-bold tracking-wide sm:text-2xl text-brand-dark",
+  major: "text-sm font-semibold sm:text-base text-primary",
   minor: "text-[10px] font-medium sm:text-xs text-primary-foreground/85",
 };
 
@@ -245,8 +245,10 @@ function Index() {
                     top: `${label.y}%`,
                     textShadow:
                       label.tier === "hero"
-                        ? "0 1px 2px rgba(35, 25, 75, 0.55), 0 2px 14px rgba(35, 25, 75, 0.45)"
-                        : "0 1px 8px rgba(35, 25, 75, 0.5)",
+                        ? "0 1px 3px rgba(255, 255, 255, 0.75), 0 0 16px rgba(255, 255, 255, 0.55)"
+                        : label.tier === "major"
+                          ? "0 1px 10px rgba(255, 255, 255, 0.65)"
+                          : "0 1px 8px rgba(35, 25, 75, 0.5)",
                   }}
                 >
                   {label.name}
