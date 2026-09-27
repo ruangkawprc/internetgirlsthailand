@@ -4,7 +4,7 @@ using the attached image as logo, but make it more hd and use the color there as
 
 This project was built with [Lovable](https://lovable.dev).
 
-**Live app**: https://spectrum-spark-arts.lovable.app
+**Live app**: https://internetgirlsthailand.lovable.app/
 
 ## Build with Lovable
 
