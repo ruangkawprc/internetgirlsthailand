@@ -13,7 +13,7 @@ const buttonVariants = cva(
         brand:
           "bg-brand-gradient text-primary-foreground shadow-brand hover:-translate-y-0.5 hover:brightness-110",
         brandOutline:
-          "btn-gradient-outline text-gradient shadow-soft hover:-translate-y-0.5",
+          "btn-gradient-outline shadow-soft hover:-translate-y-0.5",
         brandLight:
           "bg-brand-lime text-brand-ink shadow-soft hover:-translate-y-0.5 hover:bg-brand-lime/90",
         destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
