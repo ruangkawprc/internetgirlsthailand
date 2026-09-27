@@ -167,13 +167,13 @@
 }
 
 @utility bg-page-gradient {
-  background-color: oklch(0.8 0.08 270);
+  background-color: oklch(0.87 0.06 270);
   background-image:
-    radial-gradient(ellipse 70% 60% at 0% 10%, oklch(0.66 0.16 255) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 100% 0%, oklch(0.92 0.04 280) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 60% at 90% 70%, oklch(0.82 0.08 220) 0%, transparent 60%),
-    radial-gradient(ellipse 70% 60% at 5% 100%, oklch(0.74 0.11 295) 0%, transparent 60%),
-    linear-gradient(135deg, oklch(0.74 0.13 265), oklch(0.84 0.06 290));
+    radial-gradient(ellipse 70% 60% at 0% 10%, oklch(0.75 0.13 255) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 100% 0%, oklch(0.94 0.035 280) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 60% at 90% 70%, oklch(0.88 0.06 220) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 60% at 5% 100%, oklch(0.82 0.09 295) 0%, transparent 60%),
+    linear-gradient(135deg, oklch(0.81 0.11 265), oklch(0.9 0.05 290));
 }
 
 @utility text-gradient {
