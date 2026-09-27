@@ -56,8 +56,6 @@ function Index() {
             <span className="hidden text-sm font-bold sm:inline">Internet Girls Thailand</span>
           </a>
           <nav className="hidden items-center gap-7 text-sm font-semibold md:flex" aria-label="Main navigation">
-            <a href="#about" className="transition-colors hover:text-primary">About</a>
-            <a href="#community" className="transition-colors hover:text-primary">Community</a>
             <Button asChild variant="brand" size="pill"><a href="#waitlist">Join the Waitlist</a></Button>
           </nav>
           <Button variant="ghost" size="icon" className="rounded-full md:hidden" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen}>
@@ -66,8 +64,6 @@ function Index() {
         </div>
         {menuOpen && (
           <nav className="mx-auto mt-2 grid max-w-6xl gap-2 rounded-lg border border-border bg-background p-4 shadow-soft md:hidden" aria-label="Mobile navigation">
-            <a href="#about" onClick={() => setMenuOpen(false)} className="rounded-md px-3 py-3 font-semibold hover:bg-accent">About</a>
-            <a href="#community" onClick={() => setMenuOpen(false)} className="rounded-md px-3 py-3 font-semibold hover:bg-accent">Community</a>
             <Button asChild variant="brand" size="pill"><a href="#waitlist" onClick={() => setMenuOpen(false)}>Join the Waitlist</a></Button>
           </nav>
         )}
