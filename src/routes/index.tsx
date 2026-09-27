@@ -5,27 +5,12 @@ import asiaMap from "@/assets/asia-dot-map.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { joinWaitlist } from "@/lib/waitlist.functions";
 
-const WAITLIST_KEY = "igt-waitlist";
 const INSTAGRAM = "https://www.instagram.com/internetgirls.th/";
 const FACEBOOK = "https://www.facebook.com/internetgirlsthailand/";
 const PARTNER = "https://internet-girls-ai.vercel.app/";
 
-type WaitlistEntry = { email: string; joinedAt: string };
-
-function loadWaitlist(): WaitlistEntry[] {
-  try {
-    const raw = window.localStorage.getItem(WAITLIST_KEY);
-    const parsed = raw ? JSON.parse(raw) : [];
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveWaitlist(entries: WaitlistEntry[]) {
-  window.localStorage.setItem(WAITLIST_KEY, JSON.stringify(entries));
-}
 
 
 // Set to an event object to show it; null shows the "coming soon" state.
@@ -51,7 +36,7 @@ const MAP_LABELS: { name: string; x: number; y: number; tier: "hero" | "major" |
 const MAP_LABEL_STYLES: Record<"hero" | "major" | "minor", string> = {
   hero: "text-lg font-bold tracking-wide sm:text-2xl text-brand-dark",
   major: "text-sm font-semibold sm:text-base text-primary",
-  minor: "text-[10px] font-medium sm:text-xs text-primary-foreground/85",
+  minor: "text-[10px] font-medium sm:text-xs text-foreground/85",
 };
 
 const PILLARS = [
@@ -117,15 +102,9 @@ function Index() {
     setStatus("loading");
     setMessage("");
     try {
-      await new Promise((resolve) => window.setTimeout(resolve, 700));
-      const entries = loadWaitlist();
-      const normalized = email.trim().toLowerCase();
-      if (!entries.some((entry) => entry.email === normalized)) {
-        entries.push({ email: normalized, joinedAt: new Date().toISOString() });
-        saveWaitlist(entries);
-      }
+      const result = await joinWaitlist({ data: { email: email.trim() } });
       setStatus("success");
-      setMessage("You're on the list!");
+      setMessage(result.status === "duplicate" ? "You're already on the list!" : "You're on the list!");
       setEmail("");
     } catch {
       setStatus("error");
@@ -164,14 +143,14 @@ function Index() {
       </header>
 
       {/* HERO */}
-      <section id="top" className="bg-page-gradient relative flex min-h-svh items-center overflow-hidden px-5 pb-20 pt-36 text-primary-foreground sm:px-8">
+      <section id="top" className="bg-page-gradient relative flex min-h-svh items-center overflow-hidden px-5 pb-20 pt-36 sm:px-8">
         <div className="mx-auto w-full max-w-5xl text-center">
-          <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary-foreground/85 sm:text-sm">Internet Girls Thailand</p>
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-foreground/80 sm:text-sm">Internet Girls Thailand</p>
           <h1 className="mx-auto mt-6 max-w-4xl font-display text-5xl font-medium leading-[1.02] sm:text-7xl lg:text-[5.5rem]">
             Making AI accessible to <em className="text-gradient-light pr-1">more women</em> in <em className="text-gradient-light">Thailand</em>
           </h1>
           <p className="mx-auto mt-7 max-w-2xl text-lg font-semibold sm:text-xl">A community for women to learn, experiment, and build with AI for free.</p>
-          <p className="mx-auto mt-4 max-w-2xl leading-7 text-primary-foreground/85">
+          <p className="mx-auto mt-4 max-w-2xl leading-7 text-foreground/80">
             Proudly run in partnership with <a href={PARTNER} target="_blank" rel="noreferrer" className="underline underline-offset-4">Internet Girls</a>, we bring free AI workshops, events, and community opportunities to women across Thailand, starting in Bangkok.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -199,10 +178,10 @@ function Index() {
           <p className="text-center text-xs font-bold uppercase tracking-[0.3em] text-brand-dark">What we do</p>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {PILLARS.map((p, i) => (
-              <article key={p.label} className={`flex flex-col rounded-[2rem] p-8 shadow-soft transition-transform hover:-translate-y-1 sm:p-10 ${i === 1 ? "bg-brand-gradient text-primary-foreground" : "border border-border bg-card"}`}>
+              <article key={p.label} className={`flex flex-col rounded-[2rem] p-8 shadow-soft transition-transform hover:-translate-y-1 sm:p-10 ${i === 1 ? "bg-brand-gradient text-foreground" : "border border-border bg-card"}`}>
                 <span className={`w-fit rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] ${i === 1 ? "bg-primary-foreground/20" : "bg-secondary text-brand-dark"}`}>{p.label}</span>
                 <h3 className="mt-8 font-display text-3xl italic">{p.title}</h3>
-                <p className={`mt-4 leading-7 ${i === 1 ? "text-primary-foreground/90" : "text-muted-foreground"}`}>{p.body}</p>
+                <p className={`mt-4 leading-7 ${i === 1 ? "text-foreground/90" : "text-muted-foreground"}`}>{p.body}</p>
               </article>
             ))}
           </div>
@@ -210,13 +189,13 @@ function Index() {
       </section>
 
       {/* THAILAND */}
-      <section className="bg-page-gradient overflow-hidden px-5 py-24 text-primary-foreground sm:px-8 sm:py-32">
+      <section className="bg-page-gradient overflow-hidden px-5 py-24 sm:px-8 sm:py-32">
         <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
           <div>
             <h2 className="font-display text-4xl leading-tight sm:text-6xl">Starting in Bangkok. <em className="text-gradient-light">Building across Thailand.</em></h2>
             <p className="mt-8 text-lg font-semibold">We're starting locally with free in person workshops and community events in Bangkok.</p>
-            <p className="mt-4 leading-7 text-primary-foreground/85">Our goal is to create a space where women in Thailand can access AI education, gain practical skills, and build confidence with technology, regardless of their background or level of experience.</p>
-            <p className="mt-4 leading-7 text-primary-foreground/85">As the community grows, we hope to bring more learning opportunities and connections to women across Thailand.</p>
+            <p className="mt-4 leading-7 text-foreground/80">Our goal is to create a space where women in Thailand can access AI education, gain practical skills, and build confidence with technology, regardless of their background or level of experience.</p>
+            <p className="mt-4 leading-7 text-foreground/80">As the community grows, we hope to bring more learning opportunities and connections to women across Thailand.</p>
             <p className="mt-8 inline-flex flex-wrap items-center gap-2 rounded-full bg-primary-foreground/15 px-5 py-3 text-sm font-bold">Bangkok → Thailand → Southeast Asia 🌏</p>
           </div>
           <div className="relative">
@@ -234,7 +213,7 @@ function Index() {
                         ? "0 1px 3px rgba(255, 255, 255, 0.75), 0 0 16px rgba(255, 255, 255, 0.55)"
                         : label.tier === "major"
                           ? "0 1px 10px rgba(255, 255, 255, 0.65)"
-                          : "0 1px 8px rgba(35, 25, 75, 0.5)",
+                          : "0 1px 8px rgba(255, 255, 255, 0.65)",
                   }}
                 >
                   {label.name}
@@ -298,7 +277,7 @@ function Index() {
       </section>
 
       {/* JOIN */}
-      <section id="join" className="bg-page-gradient scroll-mt-20 px-5 py-24 text-primary-foreground sm:px-8 sm:py-28">
+      <section id="join" className="bg-page-gradient scroll-mt-20 px-5 py-24 sm:px-8 sm:py-28">
         <div className="mx-auto grid max-w-5xl items-center gap-10 lg:grid-cols-2">
           <div>
             <Star className="size-14" />
