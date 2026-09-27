@@ -64,8 +64,6 @@ function Index() {
         </div>
         {menuOpen && (
           <nav className="mx-auto mt-2 grid max-w-6xl gap-2 rounded-lg border border-border bg-background p-4 shadow-soft md:hidden" aria-label="Mobile navigation">
-            <a href="#about" onClick={() => setMenuOpen(false)} className="rounded-md px-3 py-3 font-semibold hover:bg-accent">About</a>
-            <a href="#community" onClick={() => setMenuOpen(false)} className="rounded-md px-3 py-3 font-semibold hover:bg-accent">Community</a>
             <Button asChild variant="brand" size="pill"><a href="#waitlist" onClick={() => setMenuOpen(false)}>Join the Waitlist</a></Button>
           </nav>
         )}
