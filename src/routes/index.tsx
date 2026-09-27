@@ -254,11 +254,11 @@ function Index() {
       {/* FAQ */}
       <section id="faq" className="scroll-mt-24 px-5 pb-24 sm:px-8 sm:pb-32">
         <div className="mx-auto max-w-3xl">
-          <h2 className="text-center font-display text-4xl sm:text-6xl">FAQ</h2>
+          <h2 className="text-center font-display text-4xl text-brand-mid sm:text-6xl">FAQ</h2>
           <Accordion type="single" collapsible className="mt-12 space-y-3">
             {FAQ.map((item, i) => (
               <AccordionItem key={item.q} value={`q${i}`} className="rounded-3xl border border-border bg-card px-6 shadow-soft last:border-b">
-                <AccordionTrigger className="py-5 text-left text-base font-semibold hover:no-underline sm:text-lg">{item.q}</AccordionTrigger>
+                <AccordionTrigger className="py-5 text-left text-base font-semibold hover:no-underline sm:text-lg [&>svg]:text-brand-mid">{item.q}</AccordionTrigger>
                 <AccordionContent className="space-y-3 pb-6 text-base leading-7 text-muted-foreground">
                   {item.a.map((para) => <p key={para}>{para}</p>)}
                 </AccordionContent>

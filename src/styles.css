@@ -53,6 +53,7 @@
   --color-brand-ink: var(--brand-ink);
   --color-brand-soft: var(--brand-soft);
   --color-brand-pale: var(--brand-pale);
+  --color-brand-mid: var(--brand-mid);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -89,6 +90,7 @@
   --brand-ink: oklch(0.2 0.06 275);
   --brand-soft: oklch(0.79 0.12 290);
   --brand-pale: oklch(0.95 0.04 300);
+  --brand-mid: oklch(0.56 0.19 295);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
   --border: oklch(0.87 0.055 298);
