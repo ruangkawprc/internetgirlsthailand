@@ -1,9 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 
-const GATEWAY_URL = "https://connector-gateway.lovable.dev/google_sheets/v4";
-const SHEET_ID = "15AvOPdVi_aO526_TJ82a-dsNlCjE9ZQ1zO0sVq4KwpY";
-
-// Public server function: appends a waitlist signup to the Google Sheet.
+// Public server function: stores a waitlist signup in the Lovable Cloud database.
 export const joinWaitlist = createServerFn({ method: "POST" })
   .inputValidator((input: { email: string }) => {
     const email = input.email.trim().toLowerCase();
@@ -13,37 +10,28 @@ export const joinWaitlist = createServerFn({ method: "POST" })
     return { email };
   })
   .handler(async ({ data }) => {
-    const lovableKey = process.env["LOVABLE_API_KEY"];
-    const sheetsKey = process.env["GOOGLE_SHEETS_API_KEY"];
-    if (!lovableKey || !sheetsKey) throw new Error("Google Sheets is not connected.");
+    const url = process.env["SUPABASE_URL"];
+    const key = process.env["SUPABASE_PUBLISHABLE_KEY"];
+    if (!url || !key) throw new Error("Cloud is not connected.");
+
+    // sb_ keys are opaque (not JWTs): use apikey header, no Authorization bearer.
     const headers = {
-      Authorization: `Bearer ${lovableKey}`,
-      "X-Connection-Api-Key": sheetsKey,
+      apikey: key,
       "Content-Type": "application/json",
+      Prefer: "return=minimal",
     };
 
-    const readRes = await fetch(`${GATEWAY_URL}/spreadsheets/${SHEET_ID}/values/Sheet1!A:A`, { headers });
-    if (!readRes.ok) {
-      const body = await readRes.text();
-      console.error(`Sheets read failed [${readRes.status}]: ${body}`);
-      throw new Error("Could not save your signup. Please try again.");
-    }
-    const rows: string[][] = (await readRes.json()).values ?? [];
-    if (rows.some((r) => (r[0] ?? "").trim().toLowerCase() === data.email)) {
-      return { status: "duplicate" as const };
-    }
-
-    const newRows: string[][] = [];
-    if (rows.length === 0) newRows.push(["Email", "Joined at"]);
-    newRows.push([data.email, new Date().toISOString()]);
-
-    const appendRes = await fetch(
-      `${GATEWAY_URL}/spreadsheets/${SHEET_ID}/values/Sheet1!A:B:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
-      { method: "POST", headers, body: JSON.stringify({ values: newRows }) },
-    );
-    if (!appendRes.ok) {
-      const body = await appendRes.text();
-      console.error(`Sheets append failed [${appendRes.status}]: ${body}`);
+    const insertRes = await fetch(`${url}/rest/v1/waitlist`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ email: data.email }),
+    });
+    if (!insertRes.ok) {
+      const body = await insertRes.text();
+      if (insertRes.status === 409 || body.includes("23505")) {
+        return { status: "duplicate" as const };
+      }
+      console.error(`Waitlist insert failed [${insertRes.status}]: ${body}`);
       throw new Error("Could not save your signup. Please try again.");
     }
 
