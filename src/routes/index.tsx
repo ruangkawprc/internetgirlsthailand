@@ -87,29 +87,6 @@ const pillBtn = "h-13 rounded-full px-7 text-xs font-bold uppercase tracking-[0.
 
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [message, setMessage] = useState("");
-
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-      setStatus("error");
-      setMessage("Please enter a valid email address.");
-      return;
-    }
-    setStatus("loading");
-    setMessage("");
-    try {
-      const result = await joinWaitlist({ data: { email: email.trim() } });
-      setStatus("success");
-      setMessage(result.status === "duplicate" ? "You're already on the list!" : "You're on the list!");
-      setEmail("");
-    } catch {
-      setStatus("error");
-      setMessage("Something went wrong. Please try again.");
-    }
-  }
 
   const navLinks = [
     { href: "#what-we-do", label: "What we do" },
