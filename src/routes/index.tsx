@@ -9,6 +9,7 @@ const INSTAGRAM = "https://www.instagram.com/internetgirls.th/";
 const FACEBOOK = "https://www.facebook.com/internetgirlsthailand/";
 const PARTNER = "https://internet-girls-ai.vercel.app/";
 const JOIN_FORM = "https://docs.google.com/forms/d/e/1FAIpQLSfsMZ82eqkGASADuVlxc7UoXDrtvf-ILl7et9gI63kwBNHinw/viewform";
+const WORKSHOP_FORM = "https://docs.google.com/forms/d/e/1FAIpQLSeF7eZ2sfezHJ-egIQi2JN4-vmVEsqP1EWpyH34OFO6YhfMFA/viewform";
 
 
 
@@ -228,7 +229,7 @@ function Index() {
               <div className="text-center">
                 <h3 className="font-display text-3xl italic sm:text-4xl">We're just getting started.</h3>
                 <p className="mx-auto mt-4 max-w-md leading-7 text-muted-foreground">Our first Internet Girls Thailand workshops and events are coming soon.</p>
-                <Button asChild variant="brand" className={`${pillBtn} mt-8`}><a href={INSTAGRAM} target="_blank" rel="noreferrer">Follow us for updates <ArrowRight /></a></Button>
+                <Button asChild variant="brand" className={`${pillBtn} mt-8`}><a href={WORKSHOP_FORM} target="_blank" rel="noreferrer">Sign up to our first workshop <ArrowRight /></a></Button>
               </div>
             )}
           </div>
