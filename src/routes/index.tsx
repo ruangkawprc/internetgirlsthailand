@@ -1,15 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, Facebook, Instagram, LoaderCircle, Menu, X } from "lucide-react";
-import { type FormEvent, useState } from "react";
+import { ArrowRight, Facebook, Instagram, Menu, Sparkles, X } from "lucide-react";
+import { useState } from "react";
 import asiaMap from "@/assets/asia-dot-map.png";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { joinWaitlist } from "@/lib/waitlist.functions";
 
 const INSTAGRAM = "https://www.instagram.com/internetgirls.th/";
 const FACEBOOK = "https://www.facebook.com/internetgirlsthailand/";
 const PARTNER = "https://internet-girls-ai.vercel.app/";
+const JOIN_FORM = "https://docs.google.com/forms/d/e/1FAIpQLSfsMZ82eqkGASADuVlxc7UoXDrtvf-ILl7et9gI63kwBNHinw/viewform";
 
 
 
@@ -88,29 +87,6 @@ const pillBtn = "h-13 rounded-full px-7 text-xs font-bold uppercase tracking-[0.
 
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [message, setMessage] = useState("");
-
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-      setStatus("error");
-      setMessage("Please enter a valid email address.");
-      return;
-    }
-    setStatus("loading");
-    setMessage("");
-    try {
-      const result = await joinWaitlist({ data: { email: email.trim() } });
-      setStatus("success");
-      setMessage(result.status === "duplicate" ? "You're already on the list!" : "You're on the list!");
-      setEmail("");
-    } catch {
-      setStatus("error");
-      setMessage("Something went wrong. Please try again.");
-    }
-  }
 
   const navLinks = [
     { href: "#what-we-do", label: "What we do" },
@@ -283,16 +259,19 @@ function Index() {
             <Star className="size-14" />
             <h2 className="mt-6 font-display text-4xl leading-tight sm:text-6xl">Join the <em className="text-gradient-light">community.</em></h2>
           </div>
-          <form onSubmit={handleSubmit} noValidate className="rounded-[2rem] bg-background p-6 text-foreground shadow-soft sm:p-8">
-            <label htmlFor="email" className="text-sm font-bold">Your email</label>
-            <div className="mt-2 flex flex-col gap-3 sm:flex-row">
-              <Input id="email" type="email" value={email} onChange={(event) => { setEmail(event.target.value); if (status === "error") setStatus("idle"); }} placeholder="you@example.com" autoComplete="email" maxLength={254} disabled={status === "loading"} aria-describedby="form-message" className="h-12 rounded-full bg-background px-5" />
-              <Button type="submit" variant="brand" disabled={status === "loading"} className={`${pillBtn} h-12 shrink-0`}>
-                {status === "loading" ? <><LoaderCircle className="animate-spin" /> Joining…</> : "Join"}
-              </Button>
-            </div>
-            <p id="form-message" aria-live="polite" className={`mt-3 min-h-5 text-sm font-semibold ${status === "error" ? "text-destructive" : status === "success" ? "text-primary" : "text-muted-foreground"}`}>{message}</p>
-          </form>
+          <div className="relative overflow-hidden rounded-[2rem] bg-background p-8 text-center text-foreground shadow-soft sm:p-12">
+            <div className="pointer-events-none absolute -right-10 -top-10 size-40 rounded-full bg-brand-soft/30 blur-2xl" aria-hidden="true" />
+            <div className="pointer-events-none absolute -bottom-12 -left-12 size-44 rounded-full bg-primary/15 blur-2xl" aria-hidden="true" />
+            <span className="relative mx-auto flex size-14 items-center justify-center rounded-full bg-brand-gradient text-primary-foreground shadow-soft">
+              <Sparkles className="size-6" />
+            </span>
+            <h3 className="relative mt-6 font-display text-2xl italic sm:text-3xl">Be the first to know.</h3>
+            <p className="relative mx-auto mt-3 max-w-sm leading-7 text-muted-foreground">Fill in our short form and we'll keep you posted on workshops, events, and community news.</p>
+            <Button asChild variant="brand" className={`${pillBtn} relative mt-8 h-13`}>
+              <a href={JOIN_FORM} target="_blank" rel="noreferrer">Join the community <ArrowRight /></a>
+            </Button>
+            <p className="relative mt-4 text-xs text-muted-foreground">Takes less than a minute.</p>
+          </div>
         </div>
       </section>
 
