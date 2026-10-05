@@ -1,15 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, Facebook, Instagram, LoaderCircle, Menu, X } from "lucide-react";
-import { type FormEvent, useState } from "react";
+import { ArrowRight, Facebook, Instagram, Menu, Sparkles, X } from "lucide-react";
+import { useState } from "react";
 import asiaMap from "@/assets/asia-dot-map.png";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { joinWaitlist } from "@/lib/waitlist.functions";
 
 const INSTAGRAM = "https://www.instagram.com/internetgirls.th/";
 const FACEBOOK = "https://www.facebook.com/internetgirlsthailand/";
 const PARTNER = "https://internet-girls-ai.vercel.app/";
+const JOIN_FORM = "https://docs.google.com/forms/d/e/1FAIpQLSfsMZ82eqkGASADuVlxc7UoXDrtvf-ILl7et9gI63kwBNHinw/viewform";
 
 
 
