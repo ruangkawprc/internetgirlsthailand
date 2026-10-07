@@ -105,9 +105,9 @@ const HERO_SPARKLES = [
   { x: 30, y: 10, s: 12, d: "0.9s" },
 ];
 
-function Sparkle({ className = "" }: { className?: string }) {
+function Sparkle({ className = "", style }: { className?: string; style?: React.CSSProperties }) {
   return (
-    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+    <svg viewBox="0 0 24 24" className={className} style={style} aria-hidden="true">
       <path
         fill="currentColor"
         d="M12 0c.6 5.2 2.1 7.7 6.9 9.2C14.1 10.7 12.6 13.2 12 24c-.6-10.8-2.1-13.3-6.9-14.8C9.9 7.7 11.4 5.2 12 0z"
@@ -156,7 +156,13 @@ function Index() {
             <Sparkle
               key={`${sp.x}-${sp.y}`}
               className="twinkle absolute -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_0_6px_oklch(1_0_0/0.6)]"
-              // eslint-disable-next-line react/style-prop-object
+              style={{
+                left: `${sp.x}%`,
+                top: `${sp.y}%`,
+                width: sp.s,
+                height: sp.s,
+                animationDelay: sp.d,
+              }}
             />
           ))}
         </div>
