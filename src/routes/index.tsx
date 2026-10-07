@@ -159,7 +159,7 @@ function Index() {
               style={{ left: `${sp.x}%`, top: `${sp.y}%`, width: sp.s, height: sp.s }}
             >
               <Sparkle
-                className="twinkle block h-full w-full drop-shadow-[0_0_10px_oklch(1_0_0/0.85)]"
+                className="twinkle sparkle-glow block h-full w-full"
                 style={{ animationDelay: sp.d }}
               />
             </span>
