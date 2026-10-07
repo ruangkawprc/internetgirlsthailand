@@ -199,10 +199,10 @@ function Index() {
           <p className="text-center text-xs font-bold uppercase tracking-[0.3em] text-brand-dark">What we do</p>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {PILLARS.map((p, i) => (
-              <article key={p.label} className={`flex flex-col rounded-[2rem] p-8 shadow-soft transition-transform hover:-translate-y-1 sm:p-10 ${i === 1 ? "bg-brand-gradient text-foreground" : "border border-border bg-card"}`}>
+              <article key={p.label} className={`flex flex-col rounded-[2rem] p-8 shadow-soft transition-transform hover:-translate-y-1 sm:p-10 ${i === 1 ? "bg-brand-gradient text-primary-foreground" : "border border-border bg-card"}`}>
                 <span className={`w-fit rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] ${i === 1 ? "bg-primary-foreground/20" : "bg-secondary text-brand-dark"}`}>{p.label}</span>
                 <h3 className="mt-8 font-display text-3xl italic">{p.title}</h3>
-                <p className={`mt-4 leading-7 ${i === 1 ? "text-foreground/90" : "text-muted-foreground"}`}>{p.body}</p>
+                <p className={`mt-4 leading-7 ${i === 1 ? "text-primary-foreground/90" : "text-muted-foreground"}`}>{p.body}</p>
               </article>
             ))}
           </div>
