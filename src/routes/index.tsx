@@ -153,17 +153,16 @@ function Index() {
       <section id="top" className="bg-page-gradient relative flex min-h-svh items-center overflow-hidden px-5 pb-20 pt-36 sm:px-8">
         <div className="pointer-events-none absolute inset-0 select-none text-primary-foreground" aria-hidden="true">
           {HERO_SPARKLES.map((sp) => (
-            <Sparkle
+            <span
               key={`${sp.x}-${sp.y}`}
-              className="twinkle absolute -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_0_6px_oklch(1_0_0/0.6)]"
-              style={{
-                left: `${sp.x}%`,
-                top: `${sp.y}%`,
-                width: sp.s,
-                height: sp.s,
-                animationDelay: sp.d,
-              }}
-            />
+              className="absolute block -translate-x-1/2 -translate-y-1/2"
+              style={{ left: `${sp.x}%`, top: `${sp.y}%`, width: sp.s, height: sp.s }}
+            >
+              <Sparkle
+                className="twinkle block h-full w-full drop-shadow-[0_0_10px_oklch(1_0_0/0.85)]"
+                style={{ animationDelay: sp.d }}
+              />
+            </span>
           ))}
         </div>
         <div className="mx-auto w-full max-w-5xl text-center">
