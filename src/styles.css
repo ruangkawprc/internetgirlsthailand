@@ -219,8 +219,8 @@
 }
 
 @keyframes twinkle {
-  0%, 100% { transform: scale(0.6) rotate(-8deg); opacity: 0.25; }
-  50% { transform: scale(1) rotate(8deg); opacity: 1; }
+  0%, 100% { transform: scale(0.75) rotate(-8deg); opacity: 0.5; }
+  50% { transform: scale(1.15) rotate(8deg); opacity: 1; }
 }
 
 @utility shadow-brand {
