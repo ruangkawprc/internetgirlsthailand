@@ -10,3 +10,4 @@
 - [x] Change all white body text to black (gradient buttons stay white).
 - [x] Store waitlist signups in Lovable Cloud database (duplicate emails rejected server-side).
 - [ ] Send welcome email per signup (blocked: user must connect a sender domain via the email setup dialog).
+- [x] Add sparse twinkling white sparkles to the hero gradient area.

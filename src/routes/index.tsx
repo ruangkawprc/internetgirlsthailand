@@ -86,6 +86,36 @@ function Star({ className = "" }: { className?: string }) {
 
 const pillBtn = "h-13 rounded-full px-7 text-xs font-bold uppercase tracking-[0.14em]";
 
+// Sparse white sparkles scattered across the hero gradient (percent coordinates).
+const HERO_SPARKLES = [
+  { x: 6, y: 17, s: 16, d: "0s" },
+  { x: 20, y: 30, s: 10, d: "1.6s" },
+  { x: 4, y: 47, s: 12, d: "0.8s" },
+  { x: 13, y: 63, s: 18, d: "2.4s" },
+  { x: 7, y: 82, s: 11, d: "1.2s" },
+  { x: 31, y: 75, s: 9, d: "3.1s" },
+  { x: 44, y: 89, s: 13, d: "0.4s" },
+  { x: 63, y: 80, s: 10, d: "2.8s" },
+  { x: 81, y: 88, s: 16, d: "1.9s" },
+  { x: 93, y: 66, s: 12, d: "0.6s" },
+  { x: 87, y: 44, s: 9, d: "3.5s" },
+  { x: 95, y: 24, s: 14, d: "2.1s" },
+  { x: 76, y: 12, s: 11, d: "1.4s" },
+  { x: 55, y: 8, s: 9, d: "2.6s" },
+  { x: 30, y: 10, s: 12, d: "0.9s" },
+];
+
+function Sparkle({ className = "", style }: { className?: string; style?: React.CSSProperties }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} style={style} aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M12 0c.6 5.2 2.1 7.7 6.9 9.2C14.1 10.7 12.6 13.2 12 24c-.6-10.8-2.1-13.3-6.9-14.8C9.9 7.7 11.4 5.2 12 0z"
+      />
+    </svg>
+  );
+}
+
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -121,6 +151,21 @@ function Index() {
 
       {/* HERO */}
       <section id="top" className="bg-page-gradient relative flex min-h-svh items-center overflow-hidden px-5 pb-20 pt-36 sm:px-8">
+        <div className="pointer-events-none absolute inset-0 select-none text-primary-foreground" aria-hidden="true">
+          {HERO_SPARKLES.map((sp) => (
+            <Sparkle
+              key={`${sp.x}-${sp.y}`}
+              className="twinkle absolute -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_0_6px_oklch(1_0_0/0.6)]"
+              style={{
+                left: `${sp.x}%`,
+                top: `${sp.y}%`,
+                width: sp.s,
+                height: sp.s,
+                animationDelay: sp.d,
+              }}
+            />
+          ))}
+        </div>
         <div className="mx-auto w-full max-w-5xl text-center">
           <p className="text-xs font-bold uppercase tracking-[0.3em] text-foreground/80 sm:text-sm">Internet Girls Thailand</p>
           <h1 className="mx-auto mt-6 max-w-4xl font-display text-5xl font-medium leading-[1.02] sm:text-7xl lg:text-[5.5rem]">
