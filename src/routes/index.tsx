@@ -8,8 +8,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 const INSTAGRAM = "https://www.instagram.com/internetgirls.th/";
 const FACEBOOK = "https://www.facebook.com/internetgirlsthailand/";
 const PARTNER = "https://internet-girls-ai.vercel.app/";
-const JOIN_FORM = "https://docs.google.com/forms/d/e/1FAIpQLSfsMZ82eqkGASADuVlxc7UoXDrtvf-ILl7et9gI63kwBNHinw/viewform";
-const WORKSHOP_FORM = "https://docs.google.com/forms/d/e/1FAIpQLSeF7eZ2sfezHJ-egIQi2JN4-vmVEsqP1EWpyH34OFO6YhfMFA/viewform";
+const JOIN_FORM = "https://docs.google.com/forms/d/e/1FAIpQLSehLE3ahjXMfMYyDBYsXzbYe0zMFIG-CWjy9L1hNFAk9VanMQ/viewform";
+const WORKSHOP_FORM = "https://docs.google.com/forms/d/e/1FAIpQLSe6uIIrV6ObRarmdlc9sglPe5tsdxsAMyv9Ay8j0iN-3Gtlkw/viewform";
 
 
 
